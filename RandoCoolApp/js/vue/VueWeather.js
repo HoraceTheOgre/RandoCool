@@ -1,11 +1,15 @@
-class VueMeteo {
+class VueWeather {
     constructor() {
         this.html = document.getElementById("html-vue-meteo").innerHTML;
     }
 
-    afficher() {
+    display() {
         document.body.innerHTML = this.html;
         
+
+       document.getElementById("btn-retour-meteo").addEventListener("click", () => {
+            window.location.hash = "#accueil"; 
+        });
 
         this.getLocalisation();
     }

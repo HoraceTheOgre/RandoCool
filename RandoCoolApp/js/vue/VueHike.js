@@ -1,4 +1,4 @@
-class VueRandonnee {
+class VueHike {
   constructor() {
     this.html = document.getElementById("html-vue-randonnee").innerHTML;
     this.randonnee = null;
@@ -6,24 +6,24 @@ class VueRandonnee {
     this.indexActuel = 0;
   }
 
-  initialiserRandonnee(randonnee) {
+  initializeHike(randonnee) {
     this.randonnee = randonnee;
   }
 
-  setListeRandonnees(liste, index) {
+  setHikeList(liste, index) {
     this.listeRandonnees = liste;
     this.indexActuel = index;
   }
 
-  afficher() {
+  display() {
     document.getElementsByTagName("body")[0].innerHTML = this.html;
 
-    this.afficherDetails();
-    this.initialiserSwipe();
-    this.afficherCarteRandonnee(this.randonnee.latitude, this.randonnee.longitude, this.randonnee.nom);
+    this.showDetails();
+    this.initializeSwipe();
+    this.showHikeMap(this.randonnee.latitude, this.randonnee.longitude, this.randonnee.nom);
   }
 
-  afficherDetails() {
+  showDetails() {
     document.getElementById("randonnee-nom").textContent = this.randonnee.nom;
     document.getElementById("randonnee-difficulte").textContent = "Difficulté : " + this.randonnee.difficulte + "/5";
     document.getElementById("randonnee-longueur").textContent = "Longueur : " + this.randonnee.longueur + "km";
@@ -32,7 +32,7 @@ class VueRandonnee {
     document.getElementById("randonnee-denivele").textContent = "Dénivelé : " + this.randonnee.denivele + "m";
   }
 
-  initialiserSwipe() {
+  initializeSwipe() {
     const btnLeft = document.querySelector(".swipe-left");
     const btnRight = document.querySelector(".swipe-right");
     const conteneur = document.querySelector(".page-detail");
@@ -56,32 +56,32 @@ class VueRandonnee {
         const difference = evenement.clientX - positionDepartX;
 
         if (difference > SEUIL) {
-          this.swipeGauche();
+          this.swipeLeft();
         } else if (difference < -SEUIL) {
-          this.swipeDroite();
+          this.swipeRight();
         }
 
         glissementEnCours = false;
       });
     }
 
-    if (btnLeft) btnLeft.addEventListener("click", () => this.swipeGauche());
-    if (btnRight) btnRight.addEventListener("click", () => this.swipeDroite());
+    if (btnLeft) btnLeft.addEventListener("click", () => this.swipeLeft());
+    if (btnRight) btnRight.addEventListener("click", () => this.swipeRight());
   }
   
-  swipeGauche() {
+  swipeLeft() {
     let newIndex = this.indexActuel - 1;
     if (newIndex < this.listeRandonnees[0].id) newIndex = this.listeRandonnees[0].id;
     window.location.hash = "#randonnee/" + newIndex;
   }
 
-  swipeDroite() {
+  swipeRight() {
     let newIndex = this.indexActuel + 1;
     if (newIndex > this.listeRandonnees[this.listeRandonnees.length-1].id) newIndex = this.listeRandonnees[this.listeRandonnees.length-1].id;
     window.location.hash = "#randonnee/" + newIndex;
   }
 
-  afficherCarteRandonnee(lat, lon, nom) {
+  showHikeMap(lat, lon, nom) {
     if (typeof L === "undefined") return;
 
     const mapContainer = document.getElementById("map");

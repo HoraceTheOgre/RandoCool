@@ -8,13 +8,13 @@
     <script src="dist/leaflet.js"></script>
 
     <script src="cordova.js"></script>
-    <script src="js/modele/Randonnee.js"></script>
-    <script src="js/donnee/RandonneeDAO.js"></script>
-    <script src="js/vue/VueAccueil.js"></script>
-    <script src="js/vue/VueListeRandonnee.js"></script>
-    <script src="js/vue/VueRandonnee.js"></script>
-    <script src="js/vue/VueMeteo.js"></script>
-    <script src="js/vue/VuePlanificateur.js"></script>
+    <script src="js/modele/Hike.js"></script>
+    <script src="js/donnee/HikeDAO.js"></script>
+    <script src="js/vue/VueHome.js"></script>
+    <script src="js/vue/VueListHike.js"></script>
+    <script src="js/vue/VueHike.js"></script>
+    <script src="js/vue/VueWeather.js"></script>
+    <script src="js/vue/VuePlanner.js"></script>
     <script defer src="Application.js"></script>
 </head>
 
@@ -27,7 +27,8 @@
             <h2>Accueil</h2>
             <a class="action btn-page-liste" href="#liste-randonnee">Liste de randonnées</a>
             <a class="action btn-page-liste btn-meteo" href="#meteo">Météo & Status</a>
-            <a class="action btn-page-liste" href="#planificateur">Planificateur</a>
+            <a class="action btn-page-liste btn-planif" href="#planificateur">Planificateur</a>
+            <a class="action btn-page-liste btn-plan" href="#mes-plans">Mes Plans</a>
         <div class="app">
             <div class="container">
                 <h1>Speed Tracker</h1>
@@ -37,10 +38,10 @@
                     <div class="speed-unit">km/h</div>
                 </div>
     
-                <div id="status" class="status">Ready</div>
+                <div id="status" class="status">Prêt</div>
     
-                <button id="startBtn" class="btn">Start</button>
-                <button id="stopBtn" class="btn" disabled>Stop</button>
+                <button id="startBtn" class="btn">Commencer</button>
+                <button id="stopBtn" class="btn" disabled>Arrêter</button>
             </div>
         </div>
         <div class="info-box">
@@ -195,9 +196,13 @@
         <p class="subtitle">Cochez ce que vous amenez.</p>
 
         <div class="add-item-box">
-            <input type="text" id="nouvel-objet" placeholder="Ajouter un item perso...">
-            <button type="button" id="btn-add-item" class="btn-small">+</button>
-        </div>
+    <input type="text" id="nouvel-objet" placeholder="Ajouter un item perso...">
+    <button type="button" id="btn-add-item" class="btn-small">+</button>
+
+    <button type="button" id="btn-clear-items" class="btn-small" style="background: #ef4444; margin-left: 5px;" title="Effacer items perso">
+        X
+    </button>
+</div>
 
         <div id="liste-equipement" class="checklist-container">
             </div>
@@ -226,4 +231,16 @@
     </section>
 </div>
 </script>
+<script type="text/html" id="html-vue-mes-plans">
+<div class="page-planificateur" > <header>
+        <a href="#" class="action btn-retour">← Accueil</a>
+        <h1>Mes Plans Sauvegardés</h1>
+    </header>
+
+    <div id="liste-mes-plans" class="dashboard-container">
+        </div>
+</div>
+</script>
+
+<script src="js/vue/VueMyPlans.js"></script>
 </html>

@@ -1,44 +1,47 @@
-class RandonneeDAO {
+class HikeDAO {
   constructor() {
     this.URL = "https://rando.julienotis.com/";
   }
 
-  lister(filtre) {
+  lister(filter) {
     const USER = "randocool";
     const PASS = "Maintenanceweb1234!";
-
     const AUTH = "Basic " + btoa(`${USER}:${PASS}`);
 
     return fetch(this.URL + "controlleur/rando.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: AUTH,
+        "Authorization": AUTH,
       },
-      body: "filtre="+encodeURIComponent(filtre),
+      body: "filtre=" + encodeURIComponent(filter),
     })
       .then((response) => response.text())
       .then((str) => new window.DOMParser().parseFromString(str, "text/xml"))
       .then((xml) => {
         const randos = xml.getElementsByTagName("rando");
-        let listeRando = [];
+        let hikeList = [];
+
         for (let i = 0; i < randos.length; i++) {
           const r = randos[i];
-          let rando = new Randonnee(
-            r.getElementsByTagName("id")[0].textContent,
-            r.getElementsByTagName("nom")[0].textContent,
+
+          // FIX: Added .trim() to ID and Nom
+          let hike = new Hike(
+            r.getElementsByTagName("id")[0].textContent.trim(), // <--- TRIM HERE
+            r.getElementsByTagName("nom")[0].textContent.trim(), // <--- TRIM HERE
             parseFloat(r.getElementsByTagName("longitude")[0].textContent),
             parseFloat(r.getElementsByTagName("latitude")[0].textContent),
             parseFloat(r.getElementsByTagName("longueur")[0].textContent),
             parseFloat(r.getElementsByTagName("denivele")[0].textContent),
             parseInt(r.getElementsByTagName("difficulte")[0].textContent)
           );
-          listeRando.push(rando);
+
+          hikeList.push(hike);
         }
-        return listeRando;
+        return hikeList;
       })
       .catch((err) => {
-        console.error("Erreur lors du chargement des randonnées :", err);
+        console.error("Error loading hikes:", err);
         return [];
       });
   }
@@ -46,42 +49,42 @@ class RandonneeDAO {
   chercher(id) {
     const USER = "randocool";
     const PASS = "Maintenanceweb1234!";
-
     const AUTH = "Basic " + btoa(`${USER}:${PASS}`);
 
     return fetch(this.URL + "controlleur/detail.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: AUTH,
+        "Authorization": AUTH,
       },
-      body: "id=" + id, // SELECT * WHERE id = ?
+      body: "id=" + id,
     })
       .then((response) => response.text())
       .then((str) => new window.DOMParser().parseFromString(str, "text/xml"))
       .then((xml) => {
         const r = xml.getElementsByTagName("rando")[0];
         if (!r) {
-          console.error("Randonnée introuvable dans le XML");
+          console.error("Hike not found in XML");
           return null;
         }
 
-        let rando = new Randonnee(
-          r.getElementsByTagName("id")[0].textContent,
-          r.getElementsByTagName("nom")[0].textContent,
-          parseFloat(r.getElementsByTagName("longitude")[0].textContent),
-          parseFloat(r.getElementsByTagName("latitude")[0].textContent),
-          parseFloat(r.getElementsByTagName("longueur")[0].textContent),
-          parseFloat(r.getElementsByTagName("denivele")[0].textContent),
-          parseInt(r.getElementsByTagName("difficulte")[0].textContent)
+        // MATCHING YOUR MODEL ORDER:
+        // id, nom, longitude, latitude, longueur, denivele, difficulte
+        let hike = new Hike(
+            r.getElementsByTagName("id")[0].textContent,
+            r.getElementsByTagName("nom")[0].textContent,
+            parseFloat(r.getElementsByTagName("longitude")[0].textContent),
+            parseFloat(r.getElementsByTagName("latitude")[0].textContent),
+            parseFloat(r.getElementsByTagName("longueur")[0].textContent),
+            parseFloat(r.getElementsByTagName("denivele")[0].textContent),
+            parseInt(r.getElementsByTagName("difficulte")[0].textContent)
         );
 
-        return rando;
+        return hike;
       })
       .catch((err) => {
-        console.error("Erreur lors de la récupération de la randonnée :", err);
+        console.error("Error fetching hike details:", err);
         return null;
       });
   }
-
 }

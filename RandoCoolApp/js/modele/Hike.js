@@ -1,4 +1,4 @@
-class Randonnee {
+class Hike {
   constructor(id, nom, longitude, latitude, longueur, denivele, difficulte) {
     this.id = id;
     this.nom = nom;

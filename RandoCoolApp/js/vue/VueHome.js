@@ -1,18 +1,20 @@
-class VueAccueil {
+class VueHome {
     constructor() {
         this.html = document.getElementById("html-vue-accueil").innerHTML;
         this.watchId = null;
     }
 
-    afficher() {
+    display() {
         document.getElementsByTagName("body")[0].innerHTML = this.html;
 
+        // Logic formerly in onDeviceReady is moved here so it runs when the view loads
         console.log('Ready');
         this.updateStatus('Ready');
 
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
 
+        // Using arrow functions '() =>' handles the 'this' context automatically
         if (startBtn) startBtn.addEventListener('click', () => this.startTracking());
         if (stopBtn) stopBtn.addEventListener('click', () => this.stopTracking());
     }
@@ -69,6 +71,7 @@ class VueAccueil {
 
     onError(error) {
         let errorMessage = 'Error';
+        // Note: In modern JS, error codes are usually accessed directly or via constants
         if (error.code === error.PERMISSION_DENIED) errorMessage = 'Permission denied';
         else if (error.code === error.POSITION_UNAVAILABLE) errorMessage = 'GPS unavailable';
         else if (error.code === error.TIMEOUT) errorMessage = 'GPS timeout';

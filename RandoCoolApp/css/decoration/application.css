@@ -58,6 +58,24 @@ body {
     max-width: 180px;
 }
 
+/* Loading Screen */
+#page-chargement-application {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #808080;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(18px, 4.5vw, 22px);
+    z-index: 9999;
+    padding: 20px;
+    text-align: center;
+}
+
 /* =========================================
    3. TYPOGRAPHY
    ========================================= */
@@ -81,7 +99,7 @@ h2 {
 /* =========================================
    4. BUTTONS & ACTIONS
    ========================================= */
-/* Standard Button */
+/* Base Button */
 .btn {
     background: #5a5a5a;
     color: #e0e0e0;
@@ -130,7 +148,10 @@ h2 {
     background-color: #e89450;
 }
 
-/* Button Variants */
+/* Button Colors & Variants */
+a.btn-planif { background-color: #4a6741; }
+a.btn-plan   { background-color: #BE6400; }
+
 .btn-page-liste {
     margin: 0;
     width: 90%;
@@ -158,7 +179,7 @@ h2 {
     background-color: #e89450;
 }
 
-/* METEO BUTTON (Blue Override) */
+/* Meteo Button Override */
 a.action.btn-meteo {
     background-color: #3b82f6 !important;
     width: 90%;
@@ -171,8 +192,136 @@ a.action.btn-meteo:active {
     transform: scale(0.95);
 }
 
+/* Small Utility Button */
+.btn-small {
+    background: #4ade80;
+    border: none;
+    width: auto;
+    min-width: 40px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Specific Action Colors */
+.btn-modify {
+    background-color: #3b82f6 !important; /* Force BLUE */
+    color: white;
+}
+
+.btn-delete {
+    background-color: #ef4444 !important; /* Force RED */
+    color: white;
+}
+
+/* Navigation Buttons (Wizard) */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-next {
+    flex: 2;
+    background: #f4a460;
+}
+
+.btn-secondary {
+    flex: 1;
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
 /* =========================================
-   5. COMPONENTS: HOME & SPEED
+   5. FORMS & INPUTS
+   ========================================= */
+form {
+    background-color: #5a5a5a;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+fieldset {
+    border: 2px solid #ffffff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+legend {
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0 10px;
+    font-size: clamp(14px, 3.5vw, 16px);
+}
+
+label {
+    display: block;
+    color: #ffffff;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-size: clamp(13px, 3.2vw, 15px);
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: clamp(14px, 3.5vw, 16px);
+    background-color: #ffffff;
+    color: #000000;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type="submit"] {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    font-size: clamp(15px, 4vw, 18px);
+}
+
+/* Focus States */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+.action:focus,
+.btn:focus {
+    outline: 2px solid #f4a460;
+    outline-offset: 2px;
+}
+
+/* Big Input Variant (Wizard) */
+.input-big {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    background: #333;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 10px;
+}
+
+/* =========================================
+   6. COMPONENT: SPEED DISPLAY
    ========================================= */
 .speed-display {
     background: #4a4a4a;
@@ -198,7 +347,7 @@ a.action.btn-meteo:active {
 }
 
 /* =========================================
-   6. COMPONENTS: LIST & SEARCH
+   7. PAGE: LIST & SEARCH
    ========================================= */
 .search-filter-container {
     display: flex;
@@ -231,12 +380,30 @@ a.action.btn-meteo:active {
     color: #ffffff;
     font-size: clamp(14px, 3.5vw, 16px);
     outline: none;
+    padding: 0;
+    margin: 0;
 }
 
 #search-input::placeholder {
     color: #999999;
 }
 
+.btn-trash-item {
+    background: transparent;
+    border: none;
+    color: #ef4444; /* Red */
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 10px;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.btn-trash-item:hover {
+    color: #ff0000;
+    transform: scale(1.2);
+}
 .filter-btn {
     background-color: #87CEEB;
     border: 2px solid #ffffff;
@@ -301,7 +468,7 @@ a.action.btn-meteo:active {
 }
 
 /* =========================================
-   7. COMPONENTS: DETAIL PAGE
+   8. PAGE: DETAILS
    ========================================= */
 .page-detail {
     padding: 20px 10px;
@@ -403,7 +570,7 @@ a.action.btn-meteo:active {
 }
 
 /* =========================================
-   8. COMPONENTS: DASHBOARD METEO
+   9. PAGE: METEO DASHBOARD
    ========================================= */
 .page-meteo {
     padding: 20px;
@@ -431,7 +598,7 @@ a.action.btn-meteo:active {
     margin-top: 20px;
 }
 
-/* Shared Card Style for Dashboard */
+/* Card Styles */
 .card {
     background: #333;
     border-radius: 15px;
@@ -441,7 +608,7 @@ a.action.btn-meteo:active {
     position: relative;
 }
 
-/* Status Card (Temp) */
+/* Status Card */
 .status-card .big-icon {
     font-size: 60px;
     margin: 10px 0;
@@ -509,90 +676,25 @@ a.action.btn-meteo:active {
 }
 
 /* =========================================
-   9. FORMS & UTILITIES
+   10. PAGE: PLANIFICATEUR (WIZARD & SAVED)
    ========================================= */
-form {
-    background-color: #5a5a5a;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px 0;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-fieldset {
-    border: 2px solid #ffffff;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 8px;
-}
-
-legend {
-    color: #ffffff;
-    font-weight: bold;
-    padding: 0 10px;
-    font-size: clamp(14px, 3.5vw, 16px);
-}
-
-label {
-    display: block;
-    color: #ffffff;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    text-align: left;
-    font-size: clamp(13px, 3.2vw, 15px);
-    font-weight: 500;
-}
-
-input[type="text"], input[type="number"], textarea, select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    font-size: clamp(14px, 3.5vw, 16px);
-    background-color: #ffffff;
-    color: #000000;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-input[type="submit"] {
-    width: 100%;
-    margin-top: 15px;
-    padding: 14px;
-    font-size: clamp(15px, 4vw, 18px);
-}
-
-input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:focus {
-    outline: 2px solid #f4a460;
-    outline-offset: 2px;
-}
-
-/* Loading Screen */
-#page-chargement-application {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #808080;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: clamp(18px, 4.5vw, 22px);
-    z-index: 9999;
-    padding: 20px;
-    text-align: center;
-}
-/* --- WIZARD PLANIFICATEUR --- */
 .page-planificateur {
     padding: 20px;
     width: 100%;
     color: white;
     padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-planificateur header {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
 }
 
 .wizard-step {
@@ -603,19 +705,12 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
     display: none;
 }
 
-/* Inputs */
-.input-big {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    margin-bottom: 20px;
-    background: #333;
-    color: white;
-    border: 2px solid #555;
-    border-radius: 10px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Result Cards */
+/* Result & Info Cards */
 .result-card, .info-card {
     background: #444;
     border-radius: 10px;
@@ -628,10 +723,10 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
 .highlight-value {
     font-size: 24px;
     font-weight: bold;
-    color: #4ade80; /* Vert fluo */
+    color: #4ade80;
 }
 
-/* Checklist */
+/* Checklist Styling */
 .checklist-container h4 {
     color: #f4a460;
     margin-top: 20px;
@@ -642,6 +737,11 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
 .checklist-item {
     padding: 10px 0;
     border-bottom: 1px solid #333;
+
+    /* NEW: Align checkbox and trash button */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .checklist-item label {
@@ -653,7 +753,7 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
 }
 
 .checklist-item input[type="checkbox"] {
-    transform: scale(1.5); /* Plus grosse checkbox pour mobile */
+    transform: scale(1.5);
     accent-color: #f4a460;
 }
 
@@ -663,7 +763,6 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
     font-style: italic;
 }
 
-/* Add Item Box */
 .add-item-box {
     display: flex;
     gap: 10px;
@@ -677,42 +776,90 @@ input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:foc
     border: none;
 }
 
-.btn-small {
-    background: #4ade80;
-    border: none;
-    width: 40px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 20px;
+/* Saved Plans (Mes Plans) Cards */
+.plan-card {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 20px;
 }
 
-/* Navigation Buttons */
-.nav-buttons {
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.plan-title {
+    color: #f4a460;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.plan-weather {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+}
+
+.plan-date {
+    margin: 5px 0 15px 0;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.plan-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.stat-eau {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+.stat-items {
+    color: white;
+}
+
+/* Expandable Details */
+.plan-details-box {
+    background: #222;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+}
+
+.plan-details-box summary {
+    cursor: pointer;
+    color: #f4a460;
+    font-weight: bold;
+    list-style: none;
+}
+
+.plan-items-list {
+    list-style: none;
+    padding: 10px 0 0 0;
+    margin: 0;
+}
+
+.plan-item-row {
+    color: #ccc;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    padding-left: 10px;
+    border-left: 2px solid #555;
+}
+
+.plan-actions {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-next {
-    flex: 2;
-    background: #f4a460;
-}
-
-.btn-secondary {
-    flex: 1;
-    background: #555;
-    color: white;
-    border: none;
-    border-radius: 10px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* =========================================
-   10. MEDIA QUERIES
+   11. MEDIA QUERIES
    ========================================= */
 @media screen and (max-width: 500px) {
     .swipe-navigation { gap: 5px; }

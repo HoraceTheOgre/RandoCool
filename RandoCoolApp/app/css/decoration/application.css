@@ -1,3 +1,6 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -5,16 +8,34 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: #2a2a2a;
     color: #ffffff;
     min-height: 100vh;
-    padding: 0;
-    margin: 0;
     width: 100%;
     overflow-x: hidden;
     -webkit-touch-callout: none;
+    /* Safe area support for notched devices */
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+}
+
+/* =========================================
+   2. LAYOUT CONTAINERS
+   ========================================= */
+.app {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .page {
@@ -28,16 +49,7 @@ body {
     gap: 5px;
 }
 
-.app {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-}
-
-/* Container Styles */
+.container {
     background: #3a3a3a;
     border-radius: 15px;
     padding: 30px 25px;
@@ -46,7 +58,9 @@ body {
     max-width: 180px;
 }
 
-/* Headings */
+/* =========================================
+   3. TYPOGRAPHY
+   ========================================= */
 h1 {
     color: #e0e0e0;
     margin-bottom: 5px;
@@ -64,29 +78,10 @@ h2 {
     width: 100%;
 }
 
-.speed-display {
-    background: #4a4a4a;
-    color: white;
-    border-radius: 12px;
-    padding: 30px 15px;
-    margin: 20px 0;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.speed-value {
-    font-size: 72px;
-    font-weight: 300;
-    line-height: 1;
-    margin-bottom: 5px;
-    color: #ffffff;
-}
-
-.speed-unit {
-    font-size: 22px;
-    opacity: 0.7;
-    font-weight: 300;
-}
-
+/* =========================================
+   4. BUTTONS & ACTIONS
+   ========================================= */
+/* Standard Button */
 .btn {
     background: #5a5a5a;
     color: #e0e0e0;
@@ -97,8 +92,8 @@ h2 {
     font-weight: 400;
     cursor: pointer;
     transition: all 0.2s;
-    -webkit-user-select: none;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 .btn:active {
@@ -111,7 +106,7 @@ h2 {
     cursor: not-allowed;
 }
 
-/* Action Buttons */
+/* Action Button (Orange/Primary) */
 .action, a.action {
     display: inline-block;
     background-color: #f4a460;
@@ -135,6 +130,7 @@ h2 {
     background-color: #e89450;
 }
 
+/* Button Variants */
 .btn-page-liste {
     margin: 0;
     width: 90%;
@@ -146,7 +142,64 @@ h2 {
     background-color: #f4a460;
 }
 
-/* Search and Filter */
+.btn-detail {
+    background-color: #f4a460;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: clamp(14px, 3.5vw, 16px);
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.btn-detail:active {
+    transform: scale(0.95);
+    background-color: #e89450;
+}
+
+/* METEO BUTTON (Blue Override) */
+a.action.btn-meteo {
+    background-color: #3b82f6 !important;
+    width: 90%;
+    max-width: 280px;
+    color: white;
+}
+
+a.action.btn-meteo:active {
+    background-color: #2563eb !important;
+    transform: scale(0.95);
+}
+
+/* =========================================
+   5. COMPONENTS: HOME & SPEED
+   ========================================= */
+.speed-display {
+    background: #4a4a4a;
+    color: white;
+    border-radius: 12px;
+    padding: 30px 15px;
+    margin: 20px 0;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.speed-value {
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.speed-unit {
+    font-size: 22px;
+    opacity: 0.7;
+    font-weight: 300;
+}
+
+/* =========================================
+   6. COMPONENTS: LIST & SEARCH
+   ========================================= */
 .search-filter-container {
     display: flex;
     gap: 10px;
@@ -205,7 +258,6 @@ h2 {
     background-color: #70B8D8;
 }
 
-/* Randonnee Cards (Liste) */
 #liste-randonnee-container {
     width: 100%;
     max-width: 600px;
@@ -248,23 +300,9 @@ h2 {
     color: #ffffff;
 }
 
-.btn-detail {
-    background-color: #f4a460;
-    color: #ffffff;
-    padding: 10px 30px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: clamp(14px, 3.5vw, 16px);
-    font-weight: 600;
-    transition: background-color 0.3s, transform 0.1s;
-}
-
-.btn-detail:active {
-    transform: scale(0.95);
-    background-color: #e89450;
-}
-
-/* Detail Page with Swipe Navigation */
+/* =========================================
+   7. COMPONENTS: DETAIL PAGE
+   ========================================= */
 .page-detail {
     padding: 20px 10px;
 }
@@ -304,15 +342,9 @@ h2 {
     max-width: 80px;
 }
 
-.swipe-left {
-    flex-direction: row;
-}
+.swipe-left { flex-direction: row; }
+.swipe-right { flex-direction: row-reverse; }
 
-.swipe-right {
-    flex-direction: row-reverse;
-}
-
-/* Detail Card */
 .detail-card {
     background-color: #000000;
     border: 2px solid #ffffff;
@@ -349,16 +381,9 @@ h2 {
     text-align: center;
 }
 
-.detail-difficulte,
-.detail-longueur {
-    grid-column: span 1;
-}
+.detail-difficulte, .detail-longueur { grid-column: span 1; }
+.detail-denivele { grid-column: span 2; }
 
-.detail-denivele {
-    grid-column: span 2;
-}
-
-/* Info Box */
 .info-box {
     background-color: #4a4a4a;
     border: 2px solid #ffffff;
@@ -377,7 +402,115 @@ h2 {
     word-wrap: break-word;
 }
 
-/* Forms */
+/* =========================================
+   8. COMPONENTS: DASHBOARD METEO
+   ========================================= */
+.page-meteo {
+    padding: 20px;
+    width: 100%;
+    overflow-y: auto;
+    padding-bottom: 80px;
+    background-color: #1a1a1a;
+    color: white;
+    height: 100vh;
+}
+
+.page-meteo header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Shared Card Style for Dashboard */
+.card {
+    background: #333;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* Status Card (Temp) */
+.status-card .big-icon {
+    font-size: 60px;
+    margin: 10px 0;
+    display: block;
+}
+
+.status-card .big-temp {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+}
+
+.status-card p {
+    color: #bbb;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Grid & Warnings */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.warning-card h3 {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.warning-card .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4facfe;
+    display: block;
+}
+
+.warning-card .unit {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Sunset Card */
+.sunset-card {
+    background: linear-gradient(135deg, #333 0%, #222 100%);
+    border: 1px solid #444;
+}
+
+.countdown-box {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+#daylight-left {
+    font-size: 22px;
+    font-weight: bold;
+    color: #4ade80;
+    display: block;
+    margin-bottom: 3px;
+}
+
+/* =========================================
+   9. FORMS & UTILITIES
+   ========================================= */
 form {
     background-color: #5a5a5a;
     padding: 20px;
@@ -412,10 +545,7 @@ label {
     font-weight: 500;
 }
 
-input[type="text"],
-input[type="number"],
-textarea,
-select {
+input[type="text"], input[type="number"], textarea, select {
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
@@ -435,6 +565,11 @@ input[type="submit"] {
     font-size: clamp(15px, 4vw, 18px);
 }
 
+input:focus, textarea:focus, select:focus, button:focus, .action:focus, .btn:focus {
+    outline: 2px solid #f4a460;
+    outline-offset: 2px;
+}
+
 /* Loading Screen */
 #page-chargement-application {
     position: fixed;
@@ -452,129 +587,142 @@ input[type="submit"] {
     padding: 20px;
     text-align: center;
 }
-
-/* Responsive Adjustments */
-@media screen and (max-width: 500px) {
-    .swipe-navigation {
-        gap: 5px;
-    }
-
-    .swipe-btn {
-        font-size: 30px;
-        min-width: 40px;
-    }
-
-    .swipe-text {
-        display: none;
-    }
-
-    .detail-grid {
-        gap: 10px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .page {
-        padding: 30px 40px;
-    }
-
-    .detail-card {
-        padding: 35px;
-    }
-
-    .randonnee-card {
-        padding: 30px;
-    }
-}
-
-/* Prevent text size adjustment */
-html {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-}
-
-/* Safe area support for notched devices */
-@supports (padding: max(0px)) {
-    body {
-        padding-left: max(0px, env(safe-area-inset-left));
-        padding-right: max(0px, env(safe-area-inset-right));
-        padding-bottom: max(0px, env(safe-area-inset-bottom));
-    }
-}
-
-/* Focus styles */
-input:focus,
-textarea:focus,
-select:focus,
-button:focus,
-.action:focus,
-.btn:focus {
-    outline: 2px solid #f4a460;
-    outline-offset: 2px;
-}
-
-/* Dashboard Grid */
-.page-meteo {
-    background-color: #1a1a1a;
-    color: white;
+/* --- WIZARD PLANIFICATEUR --- */
+.page-planificateur {
     padding: 20px;
-    height: 100vh;
+    width: 100%;
+    color: white;
+    padding-bottom: 80px;
 }
 
-.dashboard-container {
+.wizard-step {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.wizard-step.hidden {
+    display: none;
+}
+
+/* Inputs */
+.input-big {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    background: #333;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 10px;
+}
+
+/* Result Cards */
+.result-card, .info-card {
+    background: #444;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    border: 1px solid #666;
+}
+
+.highlight-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4ade80; /* Vert fluo */
+}
+
+/* Checklist */
+.checklist-container h4 {
+    color: #f4a460;
+    margin-top: 20px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+}
+
+.checklist-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.checklist-item label {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checklist-item input[type="checkbox"] {
+    transform: scale(1.5); /* Plus grosse checkbox pour mobile */
+    accent-color: #f4a460;
+}
+
+.tag-perso {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Add Item Box */
+.add-item-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-item-box input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+.btn-small {
+    background: #4ade80;
+    border: none;
+    width: 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
     margin-top: 20px;
 }
 
-.card {
-    background: #333;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+.btn-next {
+    flex: 2;
+    background: #f4a460;
 }
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-/* Typography */
-.big-temp {
-    font-size: 3em;
-    font-weight: bold;
-    color: #fff;
-}
-
-.big-icon {
-    font-size: 4em;
-    margin: 10px 0;
-}
-
-.warning-card .value {
-    font-size: 2em;
-    font-weight: bold;
-    color: #fbbf24; /* Amber */
-}
-
-.sunset-card {
-    border: 1px solid #555;
-    background: linear-gradient(135deg, #333 0%, #222 100%);
-}
-
-.countdown-box {
-    background: rgba(0,0,0,0.3);
+.btn-secondary {
+    flex: 1;
+    background: #555;
+    color: white;
+    border: none;
     border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
 }
 
-#daylight-left {
-    display: block;
-    font-size: 1.8em;
-    font-weight: bold;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   10. MEDIA QUERIES
+   ========================================= */
+@media screen and (max-width: 500px) {
+    .swipe-navigation { gap: 5px; }
+    .swipe-btn { font-size: 30px; min-width: 40px; }
+    .swipe-text { display: none; }
+    .detail-grid { gap: 10px; }
+}
+
+@media screen and (min-width: 768px) {
+    .page { padding: 30px 40px; }
+    .detail-card { padding: 35px; }
+    .randonnee-card { padding: 30px; }
 }

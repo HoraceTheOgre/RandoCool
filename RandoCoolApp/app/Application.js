@@ -1,11 +1,12 @@
 class Application {
-  constructor(window, RandonneeDAO, vueAccueil, vueListeRandonnee, vueRandonnee, vueMeteo) {
+  constructor(window, RandonneeDAO, vueAccueil, vueListeRandonnee, vueRandonnee, vueMeteo, vuePlanificateur) {
     this.window = window;
     this.RandonneeDAO = RandonneeDAO;
     this.vueAccueil = vueAccueil;
     this.vueListeRandonnee = vueListeRandonnee;
     this.vueRandonnee = vueRandonnee;
     this.vueMeteo = vueMeteo;
+    this.vuePlanificateur = vuePlanificateur;
 
     window.app = this;
 
@@ -30,6 +31,10 @@ class Application {
     }
     else if (hash.match(/^#meteo/)) {
       this.vueMeteo.afficher();
+    }
+    // 3. Add the navigation check
+    else if (hash.match(/^#planificateur/)) {
+        this.vuePlanificateur.afficher();
     }
     else if (hash.match(/^#liste-randonnee/)) {
       this.RandonneeDAO.lister("").then((randonnees) => {
@@ -59,5 +64,6 @@ new Application(
   new VueAccueil(),
   new VueListeRandonnee(),
   new VueRandonnee(),
-  new VueMeteo()
+  new VueMeteo(),
+  new VuePlanificateur()
 );

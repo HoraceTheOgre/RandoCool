@@ -6,9 +6,6 @@ class VueMeteo {
     afficher() {
         document.body.innerHTML = this.html;
         
-        document.getElementById("btn-retour-meteo").addEventListener("click", () => {
-            window.location.hash = "#accueil"; 
-        });
 
         this.getLocalisation();
     }
@@ -60,7 +57,7 @@ class VueMeteo {
         document.getElementById("weather-icon").innerText = icon;
         document.getElementById("weather-desc").innerText = desc;
 
-        const sunsetString = daily.sunset[0]; // Format: 2023-10-27T17:45
+        const sunsetString = daily.sunset[0];
         const sunsetDate = new Date(sunsetString);
         const now = new Date();
 

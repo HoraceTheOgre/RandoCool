@@ -55,7 +55,7 @@ class RandonneeDAO {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: AUTH,
       },
-      body: "id=" + id,
+      body: "id=" + id, // SELECT * WHERE id = ?
     })
       .then((response) => response.text())
       .then((str) => new window.DOMParser().parseFromString(str, "text/xml"))

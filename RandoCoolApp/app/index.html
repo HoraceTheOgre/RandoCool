@@ -14,6 +14,7 @@
     <script src="js/vue/VueListeRandonnee.js"></script>
     <script src="js/vue/VueRandonnee.js"></script>
     <script src="js/vue/VueMeteo.js"></script>
+    <script src="js/vue/VuePlanificateur.js"></script>
     <script defer src="Application.js"></script>
 </head>
 
@@ -25,7 +26,8 @@
             <h1>Randonnées cool</h1>
             <h2>Accueil</h2>
             <a class="action btn-page-liste" href="#liste-randonnee">Liste de randonnées</a>
-            <a class="action-btn btn-page-meteo" href="#meteo">Météo & Status</a>
+            <a class="action btn-page-liste btn-meteo" href="#meteo">Météo & Status</a>
+            <a class="action btn-page-liste" href="#planificateur">Planificateur</a>
         <div class="app">
             <div class="container">
                 <h1>Speed Tracker</h1>
@@ -81,15 +83,12 @@
         <div class="page page-detail">
             <h1>Randonnées cool</h1>
             <h2>Détail</h2>
-
             <div class="swipe-navigation">
                 <button class="swipe-btn swipe-left">
                     <span>←</span>
                 </button>
-
                 <div class="detail-card">
                     <h3 class="detail-title" id="randonnee-nom"></h3>
-
                     <div class="detail-grid">
                         <div class="detail-item detail-difficulte" id="randonnee-difficulte"></div>
                         <div class="detail-item detail-longueur" id="randonnee-longueur"></div>
@@ -98,27 +97,23 @@
                         <div class="detail-item detail-denivele" id="randonnee-denivele"></div>
                     </div>
                     <div id="map" style="height: 300px; margin-top: 20px; border-radius: 8px;"></div>
-
                 </div>
 
                 <button class="swipe-btn swipe-right">
                     <span>→</span>
                 </button>
             </div>
-
-
-
             <a href="#liste-randonnee" class="action btn-retour-liste">Retour à la liste</a>
         </div>
     </script>
 
-    <script type="text/html" id="html-vue-meteo">
+<script type="text/html" id="html-vue-meteo">
 <div class="page-meteo">
     <header>
-        <button class="btn-back" id="btn-retour-meteo">← Retour</button>
+        <a href="#" class="action btn-retour" id="btn-retour-meteo">← Retour</a>
+
         <h1>Conditions Sentier</h1>
     </header>
-
     <div class="dashboard-container">
         <div class="card status-card">
             <h3>État Actuel</h3>
@@ -149,6 +144,86 @@
             </div>
         </div>
     </div>
+</div>
+</script>
+<script type="text/html" id="html-vue-planificateur">
+<div class="page-planificateur">
+    <header>
+        <a href="#" class="action btn-retour">← Accueil</a>
+        <h1>Planificateur</h1>
+    </header>
+
+    <section id="step-1" class="wizard-step active">
+        <h2>1. Randonnée & Date</h2>
+
+        <form id="form-plan-base">
+            <label>Quelle randonnée ?</label>
+            <select id="choix-rando" class="input-big">
+                <option value="" disabled selected>Chargement...</option>
+            </select>
+
+            <label>Date et Heure d'arrivée (Départ rando)</label>
+            <input type="datetime-local" id="date-depart" class="input-big">
+
+            <div id="resultats-prevision" class="hidden">
+                <div class="card result-card">
+                    <h3>Météo prévue</h3>
+                    <div class="weather-preview">
+                        <span id="prev-icon"></span>
+                        <span id="prev-temp">--°C</span>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card info-card">
+                        <h3> Eau requise</h3>
+                        <span id="calc-eau" class="highlight-value">-- L</span>
+                    </div>
+                    <div class="card info-card">
+                        <h3> Retour estimé</h3>
+                        <span id="calc-retour" class="highlight-value">--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="btn-vers-step-2" class="action btn-next" disabled>Suivant : Équipement →</button>
+        </form>
+    </section>
+
+    <section id="step-2" class="wizard-step hidden">
+        <h2>2. Sac à dos</h2>
+        <p class="subtitle">Cochez ce que vous amenez.</p>
+
+        <div class="add-item-box">
+            <input type="text" id="nouvel-objet" placeholder="Ajouter un item perso...">
+            <button type="button" id="btn-add-item" class="btn-small">+</button>
+        </div>
+
+        <div id="liste-equipement" class="checklist-container">
+            </div>
+
+        <div class="nav-buttons">
+            <button type="button" id="btn-back-step-1" class="btn-secondary">← Retour</button>
+            <button type="button" id="btn-vers-step-3" class="action btn-next">Suivant : Récap →</button>
+        </div>
+    </section>
+
+    <section id="step-3" class="wizard-step hidden">
+        <h2>3. Prêt à partir ?</h2>
+
+        <div class="card recap-card">
+            <h3 id="recap-titre-rando">Randonnée...</h3>
+            <p> Départ : <span id="recap-date">--</span></p>
+            <p> Retour : <span id="recap-retour">--</span></p>
+            <p> Eau : <span id="recap-eau">--</span></p>
+            <p> Sac à dos : <span id="recap-items-count">0</span> objets</p>
+        </div>
+
+        <div class="nav-buttons">
+            <button type="button" id="btn-back-step-2" class="btn-secondary">← Modifier</button>
+            <button type="button" id="btn-confirmer-plan" class="action btn-confirmer"> C'est parti !</button>
+        </div>
+    </section>
 </div>
 </script>
 </html>

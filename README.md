@@ -1,2 +1,2 @@
-# Portfolio
-Le portfolio de mes projets d'informatiques
+# RandoCool
+Mon projet d'application de randonées pour vous accompagnez partout dans vos aventures!

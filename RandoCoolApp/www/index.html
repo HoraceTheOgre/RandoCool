@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Randonnées cool</title>
+    <link rel="stylesheet" href="dist/leaflet.css"/>
+    <link rel="stylesheet" href="css/decoration/application.css">
+    <style></style>
+    <script src="dist/leaflet.js"></script>
+
+    <script src="cordova.js"></script>
+    <script src="js/modele/Hike.js"></script>
+    <script src="js/donnee/HikeDAO.js"></script>
+    <script src="js/vue/VueHome.js"></script>
+    <script src="js/vue/VueListHike.js"></script>
+    <script src="js/vue/VueHike.js"></script>
+    <script src="js/vue/VueWeather.js"></script>
+    <script src="js/vue/VuePlanner.js"></script>
+    <script defer src="Application.js"></script>
+</head>
+
+<body>
+    <div id="page-chargement-application">Chargement de l'application Randonnées cool</div>
+
+    <script type="plain/text" id="html-vue-accueil">
+        <div class="page">
+            <h1>Randonnées cool</h1>
+            <h2>Accueil</h2>
+            <a class="action btn-page-liste" href="#liste-randonnee">Liste de randonnées</a>
+            <a class="action btn-page-liste btn-meteo" href="#meteo">Météo & Status</a>
+            <a class="action btn-page-liste btn-planif" href="#planificateur">Planificateur</a>
+            <a class="action btn-page-liste btn-plan" href="#mes-plans">Mes Plans</a>
+        <div class="app">
+            <div class="container">
+                <h1>Speed Tracker</h1>
+                
+                <div class="speed-display">
+                    <div class="speed-value" id="speedKmh">0</div>
+                    <div class="speed-unit">km/h</div>
+                </div>
+    
+                <div id="status" class="status">Prêt</div>
+    
+                <button id="startBtn" class="btn">Commencer</button>
+                <button id="stopBtn" class="btn" disabled>Arrêter</button>
+            </div>
+        </div>
+        <div class="info-box">
+                <p>Notre but avec cet applications est de vous aidez dans vos randonnée!</p>
+        </div>
+    </div>
+    </script>
+
+    <script type="plain/text" id="html-vue-liste-randonnee">
+        <div class="page page-liste">
+            <h1>Randonnées cool</h1>
+            <h2>Liste</h2>
+
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Rechercher... (Ex.: +10/-10)">
+                </div>
+                <button class="filter-btn">
+                    <span class="filter-icon">▼</span>
+                </button>
+            </div>
+
+            <div id="liste-randonnee-container">
+                <div class="randonnee-card">
+                    <h3 class="card-title">{Randonnee.nom}</h3>
+                    <div class="card-info">
+                        <span class="info-item">Difficulté : {Randonnee.difficulte}</span>
+                        <span class="info-item">Longueur : {Randonnee.longueur}</span>
+                    </div>
+                    <a href="#randonnee/{Randonnee.id}" class="btn-detail">Détail</a>
+                </div>
+            </div>
+
+            <a href="#" class="action btn-retour">Retour à l'accueil</a>
+        </div>
+    </script>
+
+    <script type="plain/text" id="html-vue-randonnee">
+        <div class="page page-detail">
+            <h1>Randonnées cool</h1>
+            <h2>Détail</h2>
+            <div class="swipe-navigation">
+                <button class="swipe-btn swipe-left">
+                    <span>←</span>
+                </button>
+                <div class="detail-card">
+                    <h3 class="detail-title" id="randonnee-nom"></h3>
+                    <div class="detail-grid">
+                        <div class="detail-item detail-difficulte" id="randonnee-difficulte"></div>
+                        <div class="detail-item detail-longueur" id="randonnee-longueur"></div>
+                        <div class="detail-item detail-longitude" id="randonnee-longitude"></div>
+                        <div class="detail-item detail-latitude" id="randonnee-latitude"></div>
+                        <div class="detail-item detail-denivele" id="randonnee-denivele"></div>
+                    </div>
+                    <div id="map" style="height: 300px; margin-top: 20px; border-radius: 8px;"></div>
+                </div>
+
+                <button class="swipe-btn swipe-right">
+                    <span>→</span>
+                </button>
+            </div>
+            <a href="#liste-randonnee" class="action btn-retour-liste">Retour à la liste</a>
+        </div>
+    </script>
+
+<script type="text/html" id="html-vue-meteo">
+<div class="page-meteo">
+    <header>
+        <a href="#" class="action btn-retour" id="btn-retour-meteo">← Retour</a>
+
+        <h1>Conditions Sentier</h1>
+    </header>
+    <div class="dashboard-container">
+        <div class="card status-card">
+            <h3>État Actuel</h3>
+            <div class="big-icon" id="weather-icon">Loading...</div>
+            <div class="big-temp" id="weather-temp">--°C</div>
+            <p id="weather-desc">Recherche GPS...</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card warning-card">
+                <h3>Vent (Rafales)</h3>
+                <span class="value" id="weather-wind">--</span>
+                <span class="unit">km/h</span>
+            </div>
+            <div class="card warning-card">
+                <h3>Indice UV</h3>
+                <span class="value" id="weather-uv">--</span>
+                <span class="unit">/ 10</span>
+            </div>
+        </div>
+
+        <div class="card sunset-card">
+            <h3>Lumière du jour</h3>
+            <p>Coucher du soleil : <span id="sunset-time">--:--</span></p>
+            <div class="countdown-box">
+                <span id="daylight-left">-- h -- min</span>
+                <small>restantes avant la noirceur</small>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/html" id="html-vue-planificateur">
+<div class="page-planificateur">
+    <header>
+        <a href="#" class="action btn-retour">← Accueil</a>
+        <h1>Planificateur</h1>
+    </header>
+
+    <section id="step-1" class="wizard-step active">
+        <h2>1. Randonnée & Date</h2>
+
+        <form id="form-plan-base">
+            <label>Quelle randonnée ?</label>
+            <select id="choix-rando" class="input-big">
+                <option value="" disabled selected>Chargement...</option>
+            </select>
+
+            <label>Date et Heure d'arrivée (Départ rando)</label>
+            <input type="datetime-local" id="date-depart" class="input-big">
+
+            <div id="resultats-prevision" class="hidden">
+                <div class="card result-card">
+                    <h3>Météo prévue</h3>
+                    <div class="weather-preview">
+                        <span id="prev-icon"></span>
+                        <span id="prev-temp">--°C</span>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card info-card">
+                        <h3> Eau requise</h3>
+                        <span id="calc-eau" class="highlight-value">-- L</span>
+                    </div>
+                    <div class="card info-card">
+                        <h3> Retour estimé</h3>
+                        <span id="calc-retour" class="highlight-value">--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="btn-vers-step-2" class="action btn-next" disabled>Suivant : Équipement →</button>
+        </form>
+    </section>
+
+    <section id="step-2" class="wizard-step hidden">
+        <h2>2. Sac à dos</h2>
+        <p class="subtitle">Cochez ce que vous amenez.</p>
+
+        <div class="add-item-box">
+    <input type="text" id="nouvel-objet" placeholder="Ajouter un item perso...">
+    <button type="button" id="btn-add-item" class="btn-small">+</button>
+
+    <button type="button" id="btn-clear-items" class="btn-small" style="background: #ef4444; margin-left: 5px;" title="Effacer items perso">
+        X
+    </button>
+</div>
+
+        <div id="liste-equipement" class="checklist-container">
+            </div>
+
+        <div class="nav-buttons">
+            <button type="button" id="btn-back-step-1" class="btn-secondary">← Retour</button>
+            <button type="button" id="btn-vers-step-3" class="action btn-next">Suivant : Récap →</button>
+        </div>
+    </section>
+
+    <section id="step-3" class="wizard-step hidden">
+        <h2>3. Prêt à partir ?</h2>
+
+        <div class="card recap-card">
+            <h3 id="recap-titre-rando">Randonnée...</h3>
+            <p> Départ : <span id="recap-date">--</span></p>
+            <p> Retour : <span id="recap-retour">--</span></p>
+            <p> Eau : <span id="recap-eau">--</span></p>
+            <p> Sac à dos : <span id="recap-items-count">0</span> objets</p>
+        </div>
+
+        <div class="nav-buttons">
+            <button type="button" id="btn-back-step-2" class="btn-secondary">← Modifier</button>
+            <button type="button" id="btn-confirmer-plan" class="action btn-confirmer"> C'est parti !</button>
+        </div>
+    </section>
+</div>
+</script>
+<script type="text/html" id="html-vue-mes-plans">
+<div class="page-planificateur" > <header>
+        <a href="#" class="action btn-retour">← Accueil</a>
+        <h1>Mes Plans Sauvegardés</h1>
+    </header>
+
+    <div id="liste-mes-plans" class="dashboard-container">
+        </div>
+</div>
+</script>
+
+<script src="js/vue/VueMyPlans.js"></script>
+</html>

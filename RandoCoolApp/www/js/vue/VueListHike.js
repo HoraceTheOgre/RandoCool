@@ -48,7 +48,7 @@ class VueListHike{
         if (entreeRecherche) {
             entreeRecherche.addEventListener("input", async (evenement) => {
                 const terme = evenement.target.value.toLowerCase();
-                let randonneeDAO = new RandonneeDAO(); 
+                let randonneeDAO = new HikeDAO();
                 const listeFiltree = await randonneeDAO.lister(terme);
                 this.showList(listeFiltree);
             });

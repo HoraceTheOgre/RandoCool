@@ -24,12 +24,12 @@ class VueHike {
   }
 
   showDetails() {
-    document.getElementById("randonnee-nom").textContent = this.randonnee.nom;
-    document.getElementById("randonnee-difficulte").textContent = "Difficulté : " + this.randonnee.difficulte + "/5";
-    document.getElementById("randonnee-longueur").textContent = "Longueur : " + this.randonnee.longueur + "km";
-    document.getElementById("randonnee-longitude").textContent = "Longitude : " + this.randonnee.longitude;
-    document.getElementById("randonnee-latitude").textContent = "Latitude : " + this.randonnee.latitude;
-    document.getElementById("randonnee-denivele").textContent = "Dénivelé : " + this.randonnee.denivele + "m";
+    document.getElementById("randonnee-nom").innerHTML = this.randonnee.nom;
+    document.getElementById("randonnee-difficulte").innerHTML = "Difficulté : " + this.randonnee.difficulte + "/5";
+    document.getElementById("randonnee-longueur").innerHTML = "Longueur : " + this.randonnee.longueur + "km";
+    document.getElementById("randonnee-longitude").innerHTML = "Longitude : " + this.randonnee.longitude;
+    document.getElementById("randonnee-latitude").innerHTML = "Latitude : " + this.randonnee.latitude;
+    document.getElementById("randonnee-denivele").innerHTML = "Dénivelé : " + this.randonnee.denivele + "m";
   }
 
   initializeSwipe() {

@@ -2,7 +2,7 @@ class VueListHike{
     constructor() {
         this.html = document.getElementById("html-vue-liste-randonnee").innerHTML;
         this.listeRandonneeDonnee = null;
-        this.cardTemplate = null; 
+        this.cardTemplate = null;
     }
 
     initializeList(listeRandonneeDonnee) {
@@ -13,10 +13,10 @@ class VueListHike{
         document.getElementsByTagName("body")[0].innerHTML = this.html;
         let listeContainer = document.getElementById("liste-randonnee-container");
         const templateElement = listeContainer.querySelector(".randonnee-card"); // Peut pas mettre de [0] sinon l'affichage marche pu
-        
+
         if (templateElement) {
             this.cardTemplate = templateElement.outerHTML;
-            templateElement.remove(); 
+            templateElement.remove();
         }
 
         this.showList(this.listeRandonneeDonnee);
